@@ -1,0 +1,28 @@
+experiment_name: "best_cll_logistic"
+n_folds: 1
+n_seeds: 100
+datasets_train: 
+  - "data/CLL/train"
+  - "data/CLL/val"
+datasets_valid:
+  - "data/CLL/test"
+  - "data/CLL/test_noprop"
+dataset_config:
+  sample_size: 27000
+experiment_config:
+  dd_sample_size: 5000
+  max_iter: 100000
+  bayesian_dd: True
+param_grid:
+  lr:
+    - 0.000001 
+  negative_penalty:
+    - 1
+  architecture:
+    - [15,15,1]
+  alpha:
+    - 0.95
+  dd_threshold:
+    - 95.0
+  n_restarts:
+    - 1

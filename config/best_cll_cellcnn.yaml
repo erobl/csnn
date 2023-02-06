@@ -1,0 +1,22 @@
+experiment_name: "best_cll_cellcnn"
+n_folds: 5
+n_seeds: 100
+datasets_train: 
+  - "data/CLL/train"
+  - "data/CLL/val"
+datasets_valid:
+  - "data/CLL/test"
+  - "data/CLL/test_noprop"
+dataset_config:
+  sample_size: 27000
+experiment_config:
+  max_iter: 25000
+param_grid:
+  lr:
+    - 0.00001
+  dropout:
+    - 0.1
+  architecture:
+    - [15]
+  head_arch:
+    - [15,1]

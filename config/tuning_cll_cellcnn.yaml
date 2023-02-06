@@ -1,0 +1,33 @@
+experiment_name: "tuning_cll_cellcnn"
+n_folds: 5
+n_seeds: 1
+datasets_train: 
+  - "data/CLL/train"
+datasets_valid:
+  - "data/CLL/val"
+dataset_config:
+  sample_size: 27000
+experiment_config:
+  max_iter: 25000
+param_grid:
+  lr:
+    - 0.001
+    - 0.0001
+    - 0.00001
+    - 0.000001
+  dropout:
+    - 0.1
+    - 0.3
+    - 0.5
+    - 0.7
+    - 0.9
+  architecture:
+    - [3]
+    - [6]
+    - [10]
+    - [15]
+  head_arch:
+    - [3,1]
+    - [6,1]
+    - [10,1]
+    - [15,1]

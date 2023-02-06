@@ -1,0 +1,32 @@
+experiment_name: "tuning_ball_cellcnn"
+start_seed: 0
+n_seeds: 5
+datasets: 
+  - "data/B-ALL/train"
+dataset_config:
+  sample_size: 100000
+  train_proportions: 0.8
+experiment_config:
+  max_iter: 10000
+param_grid:
+  lr:
+    - 0.001
+    - 0.0001
+    - 0.00001
+    - 0.000001
+  dropout:
+    - 0.1
+    - 0.3
+    - 0.5
+    - 0.7
+    - 0.9
+  architecture:
+    - [3]
+    - [6]
+    - [10]
+    - [15]
+  head_arch:
+    - [3,1]
+    - [6,1]
+    - [10,1]
+    - [15,1]

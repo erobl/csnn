@@ -1,0 +1,24 @@
+experiment_name: "best_cll_reg"
+n_folds: 1
+n_seeds: 100
+datasets_train: 
+  - "data/CLL/train"
+  - "data/CLL/val"
+datasets_valid:
+  - "data/CLL/test"
+  - "data/CLL/test_noprop"
+dataset_config:
+  sample_size: 27000
+experiment_config:
+  dd_sample_size: 5000
+  max_iter: 100000
+  bayesian_dd: True
+param_grid:
+  lr:
+    - 0.0001
+  negative_penalty:
+    - 30
+  architecture:
+    - [8,4,2,1]
+  n_restarts: 
+    - 1
