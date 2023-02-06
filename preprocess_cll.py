@@ -19,12 +19,13 @@ val_set = pd.read_csv("metadata/CLL_val.csv")
 test_set = pd.read_csv("metadata/CLL_test.csv")
 test_noprop_set = pd.read_csv("metadata/CLL_test_noprop.csv")
 
+feature_names = ["FSC-A", "FSC-H", "FSC-W", "SSC-A", "SSC-H", "SSC-W", "CD45", "CD22", "CD5", "CD19", "CD79b", "CD3", "CD81", "CD10", "CD43", "CD38"]
+
 for _, row in train_set.iterrows():
     print(row['Index'])
     cells = pd.read_csv(BASE_DIR / row['File'], sep="\t")
 
-    feature_names = list(cells.columns)
-    X = torch.tensor(cells.to_numpy())
+    X = torch.tensor(cells[feature_names].values).to(int)
     y = int(row['Proportion'] > 0)
     proportion = row['Proportion']
 
@@ -44,8 +45,7 @@ for _, row in val_set.iterrows():
     print(row['Index'])
     cells = pd.read_csv(BASE_DIR / row['File'], sep="\t")
 
-    feature_names = list(cells.columns)
-    X = torch.tensor(cells.to_numpy())
+    X = torch.tensor(cells[feature_names].values).to(int)
     y = int(row['Proportion'] > 0)
     proportion = row['Proportion']
 
@@ -65,8 +65,7 @@ for _, row in test_set.iterrows():
     print(row['Index'])
     cells = pd.read_csv(BASE_DIR / row['File'], sep="\t")
 
-    feature_names = list(cells.columns)
-    X = torch.tensor(cells.to_numpy())
+    X = torch.tensor(cells[feature_names].values).to(int)
     y = int(row['Proportion'] > 0)
     proportion = row['Proportion']
 
@@ -86,8 +85,7 @@ for _, row in test_noprop_set.iterrows():
     print(row['Index'])
     cells = pd.read_csv(BASE_DIR / row['File'], sep="\t")
 
-    feature_names = list(cells.columns)
-    X = torch.tensor(cells.to_numpy())
+    X = torch.tensor(cells[feature_names].values).to(int)
     y = row['Label']
 
     data = {
