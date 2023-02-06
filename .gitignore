@@ -129,6 +129,6 @@ dmypy.json
 .pyre/
 
 config/
-data/
+data/*
 ablation_experiment/
 experiment/
