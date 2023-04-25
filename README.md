@@ -1,6 +1,6 @@
 # Cell Scoring Neural Networks
 
-This repository contains the source code used for CSNN.
+This repository contains the source code used for [CSNN](https://www.medrxiv.org/content/10.1101/2023.02.07.23285606v1).
 
 Steps to run:
 
