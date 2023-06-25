@@ -15,13 +15,13 @@ experiment_config:
   bayesian_dd: True
 param_grid:
   lr:
-    - 0.000001 
-  negative_penalty:
-    - 1
-  architecture:
-    - [15,15,1]
+    - 0.000001
   alpha:
     - 0.95
+  architecture:
+    - [8,4,2,1]
+  negative_penalty:
+    - 1.0
   dd_threshold:
     - 95.0
   n_restarts:

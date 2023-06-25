@@ -2,6 +2,7 @@ import torch
 from torch.utils.data import Dataset
 from glob import glob
 import math
+from sklearn.model_selection import train_test_split
 
 class PointsetDataset(Dataset):
     def __init__(self, datasets, sample_size=None,
@@ -22,16 +23,14 @@ class PointsetDataset(Dataset):
         perm = torch.randperm(len(self.indices), generator=torch.Generator().manual_seed(random_state))
 
         if fold is not None:
-            test_mask = torch.zeros_like(perm, dtype=bool)
-            if (self.fold+1)*n_test < len(test_mask):
-                test_mask[self.fold*n_test:(self.fold+1)*n_test] = True
-            else:
-                test_mask[self.fold*n_test:] = True
+            ys = [torch.load(idx)["y"] for idx in self.indices]
+
+            train_index, test_index = train_test_split(list(range(len(self.indices))), stratify=ys, test_size=n_test, random_state=random_state)
 
             if train:
-                self.indices = [self.indices[i] for i in perm[~test_mask]]
+                self.indices = [self.indices[i] for i in train_index]
             else:
-                self.indices = [self.indices[i] for i in perm[test_mask]]
+                self.indices = [self.indices[i] for i in test_index]
         elif train_proportions is not None:
             if train:
                 self.indices = [self.indices[i] for i in perm[:n_train]]

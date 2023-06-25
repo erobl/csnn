@@ -27,6 +27,7 @@ for _, row in train_set.iterrows():
     data = {
         "X": X,
         "y": y,
+        "idx": row['Index'],
         "proportion": proportion,
         "tags": ["B-ALL", "train"],
         "feature_names": feature_names
@@ -48,6 +49,7 @@ for _, row in test_set.iterrows():
     data = {
         "X": X,
         "y": y,
+        "idx": row['Index'],
         "proportion": proportion,
         "tags": ["B-ALL", "test"],
         "feature_names": feature_names

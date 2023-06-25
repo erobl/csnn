@@ -1,13 +1,14 @@
 experiment_name: "tuning_cll_logistic"
-n_folds: 5
-n_seeds: 1
-datasets_train: 
+start_seed: 0
+n_seeds: 5
+datasets: 
   - "data/CLL/train"
-datasets_valid:
   - "data/CLL/val"
 dataset_config:
   sample_size: 27000
+  train_proportions: 0.8
 experiment_config:
+  alpha: 0.9
   dd_sample_size: 5000
   max_iter: 100000
   bayesian_dd: True

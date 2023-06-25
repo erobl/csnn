@@ -1,6 +1,6 @@
 experiment_name: "best_ball_cellcnn"
 n_folds: 5
-n_seeds: 5
+n_seeds: 100
 datasets_train: 
   - "data/B-ALL/train"
 datasets_valid:
@@ -11,10 +11,10 @@ experiment_config:
   max_iter: 25000
 param_grid:
   lr:
-    - 0.001
+    - 0.0001
   dropout:
-    - 0.3
+    - 0.5
   architecture:
-    - [3]
+    - [10]
   head_arch:
-    - [10,1]
+    - [6,1]

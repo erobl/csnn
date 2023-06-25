@@ -1,11 +1,10 @@
-experiment_name: "tuning_cll_reg"
-start_seed: 0
-n_seeds: 5
+experiment_name: "tuning_ball_reg_seed4"
+start_seed: 4
+n_seeds: 1
 datasets: 
-  - "data/CLL/train"
-  - "data/CLL/val"
+  - "data/B-ALL/train"
 dataset_config:
-  sample_size: 27000
+  sample_size: 100000
   train_proportions: 0.8
 experiment_config:
   dd_sample_size: 5000
@@ -20,8 +19,8 @@ param_grid:
   negative_penalty:
     - 1
     - 5
-    - 15
     - 30
+    - 100
   architecture:
     - [3,1]
     - [6,1]

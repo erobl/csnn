@@ -1,6 +1,6 @@
 experiment_name: "best_ball_reg"
 n_folds: 5
-n_seeds: 5
+n_seeds: 100
 datasets_train: 
   - "data/B-ALL/train"
 datasets_valid:
@@ -13,8 +13,11 @@ experiment_config:
   bayesian_dd: True
 param_grid:
   lr:
-    - 0.0001
+    - 0.001
   negative_penalty:
     - 100
   architecture:
-    - [15,15,1]
+    - [10,10,10,1]
+  alpha:
+    - 0.9
+

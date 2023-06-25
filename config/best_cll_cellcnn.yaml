@@ -13,10 +13,10 @@ experiment_config:
   max_iter: 25000
 param_grid:
   lr:
-    - 0.00001
+    - 0.0001
   dropout:
-    - 0.1
+    - 0.5
   architecture:
-    - [15]
+    - [6]
   head_arch:
-    - [15,1]
+    - [6,1]
