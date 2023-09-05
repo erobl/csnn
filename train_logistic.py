@@ -20,6 +20,7 @@ with open(sys.argv[1], 'r') as f:
     config = load(f, Loader=FullLoader)
 
 n_folds = config['n_folds']
+start_seed = config['start_seed']
 n_seeds = config['n_seeds']
 prop_folds = 1-1/n_folds
 
@@ -46,7 +47,7 @@ with open('experiment/%s/results.csv' % config['experiment_name'], 'w') as f:
 param_grid = ParameterGrid(config['param_grid'])
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-for seed in range(n_seeds):
+for seed in range(start_seed, start_seed+n_seeds):
     dataset_train = PointsetDataset(config['datasets_train'], random_state=seed, **config['dataset_config'])
     dataset_valid = PointsetDataset(config['datasets_valid'], random_state=seed, **config['dataset_config'])
 

@@ -87,11 +87,13 @@ def train_initialize(dataset_train, dataset_valid, max_iter=int(1e6), tol=1e-7,
                 tr_acc = sum(tr_accs)/len(tr_accs)
 
         if epoch % 250 == 0:
+            model.eval()
             with torch.set_grad_enabled(False):
                 preds = model(x_valid)
                 loss = criterion(preds, y_valid)
                 te_loss = loss.item()
                 te_acc = ((preds > 0.5) == y_valid).float().mean().item()
+            model.train()
 
             print("[Epoch %d] tr_loss: %.04f, tr_acc: %.04f, te_loss: %.04f, te_acc: %.04f" % (epoch, tr_loss, tr_acc, te_loss, te_acc))
 
@@ -101,6 +103,7 @@ def train_initialize(dataset_train, dataset_valid, max_iter=int(1e6), tol=1e-7,
         last_loss = tr_loss
 
     with torch.set_grad_enabled(False):
+        model.eval()
         preds_val = model(x_valid)
         preds_train = model(x_train)
     return model.cpu(), (preds_val.cpu(), y_valid.cpu()), (preds_train.cpu(), y_train.cpu())

@@ -98,7 +98,7 @@ delta_y_upsampled = np.concatenate([delta_y_train_upsampled.detach().numpy(), de
 cell_labels = (delta_y < 0).astype(float)
 predictions = np.concatenate([predictions_train, predictions_valid], axis=0)
 cells = np.concatenate([cells_train, cells_valid], axis=0)
-indexes = np.concatenate([indexes_train, indexes_valid], axis=0)
+indexes = np.concatenate([indexes_train.astype("str"), indexes_valid[:-24].astype("str"), np.core.defchararray.add((indexes_valid[-24:]).astype("str"), "_1")], axis=0)
 proportion = np.concatenate([proportion_train, np.ones_like(indexes_valid)], axis=0)
 ys = np.concatenate([ys_train, ys_valid], axis=0)
 dataset = np.concatenate([np.ones_like(ys_train), np.zeros_like(ys_valid)], axis=0)
@@ -132,14 +132,15 @@ tree_labels = np.asarray(tree_labels)
 
 os.makedirs("cell_level_labels/%s" % config["experiment_name"], exist_ok=True)
 
-headers = ["FSC-A", "FSC-H", "SSC-A", "SSC-H", "CD45", "CD22", "CD5", "CD19", "CD79b", "CD3", "CD81", "CD10", "CD43", "CD38", "Cell_Label"]
+headers = ["FSC-A", "FSC-H", "FSC-W", "SSC-A", "SSC-H", "SSC-W", "CD45", "CD22", "CD5", "CD19", "CD79b", "CD3", "CD81", "CD10", "CD43", "CD38", "Delta_Y_Delete", "Delta_Y_Upsample", "Tree_Label"]
 for tree, dyu, dy, c, i in zip(tree_labels, delta_y_upsampled, delta_y, cells, indexes):
     concat_c = np.concatenate((c, dy[:,np.newaxis], dyu[:,np.newaxis], tree[:,np.newaxis]), axis=1)
-    filename = "cell_level_labels/%s/%d.csv" % (config["experiment_name"], i)
+    filename = "cell_level_labels/%s/%s.csv" % (config["experiment_name"], i)
+    assert concat_c.shape[1] == len(headers)
     np.savetxt(filename, concat_c, delimiter=",", header=",".join(headers), comments="")
 
 
 headers = ["Index", "Class", "Predicted Class", "Train"]
 m = np.concatenate((indexes[:,np.newaxis], ys[:,np.newaxis], predictions[:,np.newaxis], dataset[:,np.newaxis]), axis=1)
 filename = "cell_level_labels/%s/output.csv" % config["experiment_name"]
-np.savetxt(filename, m, delimiter=",", header=",".join(headers), comments="")
+np.savetxt(filename, m, delimiter=",", header=",".join(headers), comments="", fmt="%s")

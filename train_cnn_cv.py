@@ -34,7 +34,7 @@ sample = param_grid[0]
 os.makedirs("experiment/%s/" % config['experiment_name'], exist_ok=True)
 with open('experiment/%s/results.csv' % config['experiment_name'], 'w') as f:
     writer = csv.writer(f)
-    row_names = ["seed"]
+    row_names = ["seed", "hash"]
     writer.writerow(row_names + list(sample.keys()) + [name + "_train" for name, _ in metrics] + [name + "_valid" for name, _ in metrics])
 
 param_grid = ParameterGrid(config['param_grid'])
@@ -85,6 +85,6 @@ for seed in range(start_seed, end_seed):
 
         with open('experiment/%s/results.csv' % config['experiment_name'], 'a') as f:
             writer = csv.writer(f)
-            metadata = [seed]
+            metadata = [seed, param_hash]
             param_list = [str(v) for v in params.values()]
             writer.writerow(metadata + param_list + train_metrics + val_metrics)

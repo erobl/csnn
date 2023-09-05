@@ -13,8 +13,8 @@ experiment_config:
   max_iter: 25000
 param_grid:
   lr:
-    - 0.001
+    - 0.000001
   architecture:
-    - [3,3]
+    - [3,10]
   head_arch:
-    - [10,1]
+    - [15,1]

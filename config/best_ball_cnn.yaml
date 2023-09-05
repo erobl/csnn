@@ -13,6 +13,6 @@ param_grid:
   lr:
     - 0.001
   architecture:
-    - [15,15]
+    - [3,6]
   head_arch:
-    - [15,1]
+    - [6,1]

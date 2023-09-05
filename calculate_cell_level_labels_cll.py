@@ -52,21 +52,22 @@ ys_valid = dataset_valid.y.numpy()
 cell_level_labels = np.concatenate([cell_level_labels_train, cell_level_labels_valid], axis=0)
 predictions = np.concatenate([predictions_train, predictions_valid], axis=0)
 cells = np.concatenate([cells_train, cells_valid], axis=0)
-indexes = np.concatenate([indexes_train, indexes_valid], axis=0)
+indexes = np.concatenate([indexes_train.astype("str"), indexes_valid[:-24].astype("str"), np.core.defchararray.add((indexes_valid[-24:]).astype("str"), "_1")], axis=0)
 proportion = np.concatenate([proportion_train, -1*np.ones_like(indexes_valid)], axis=0)
 ys = np.concatenate([ys_train, ys_valid], axis=0)
 dataset = np.concatenate([np.ones_like(ys_train), np.zeros_like(ys_valid)], axis=0)
 
 os.makedirs("cell_level_labels/%s" % config["experiment_name"], exist_ok=True)
 
-headers = ["FSC-A", "FSC-H", "SSC-A", "SSC-H", "CD45", "CD22", "CD5", "CD19", "CD79b", "CD3", "CD81", "CD10", "CD43", "CD38", "Cell_Label"]
+headers = ["FSC-A", "FSC-H", "FSC-W", "SSC-A", "SSC-H", "SSC-W", "CD45", "CD22", "CD5", "CD19", "CD79b", "CD3", "CD81", "CD10", "CD43", "CD38", "PCell", "Cell_Label"]
 for cll, c, i in zip(cell_level_labels, cells, indexes):
     cell_class = (cll > 0.5).astype(int)
     concat_c = np.concatenate((c, cll, cell_class), axis=1)
-    filename = "cell_level_labels/%s/%d.csv" % (config['experiment_name'],i)
+    filename = "cell_level_labels/%s/%s.csv" % (config['experiment_name'],i)
+    assert concat_c.shape[1] == len(headers)
     np.savetxt(filename, concat_c, delimiter=",", header=",".join(headers), comments="")
 
 headers = ["Index", "Class", "Proportion", "Predicted Proportion", "Training"]
 m = np.concatenate((indexes[:,np.newaxis], ys[:,np.newaxis], proportion[:,np.newaxis], predictions, dataset[:,np.newaxis]), axis=1)
 filename = "cell_level_labels/%s/output.csv" % config['experiment_name']
-np.savetxt(filename, m, delimiter=",", header=",".join(headers), comments="")
+np.savetxt(filename, m, delimiter=",", header=",".join(headers), comments="", fmt="%s")
