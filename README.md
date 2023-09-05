@@ -50,3 +50,24 @@ Steps to run:
 |                              |         | CSNN-Reg    | `python train_reg_ablation_no_init.py config/best_cll_reg.yaml`            |
 | Initialization only ablation | B-ALL   | N/A         | `python train_ablation_init_only.py config/best_ball_reg.yaml`             |
 |                              | CLL     | N/A         | `python train_ablation_init_only config/best_cll_reg.yaml`                 |
+
+
+# System requirements
+
+|           | Minimum                  | Used in this study                     | Notes                                            |
+|-----------|--------------------------|----------------------------------------|--------------------------------------------------|
+| Processor | 1 x86 compatible threads | 8  Intel Xeon Gold 5218 threads        | More threads makes the initialization run faster |
+| Memory    | 16GB RAM                 | 16GB RAM                               | Amount of RAM dependends on dataset size         |
+| GPU       | 1 CUDA compatible GPU    | 1+ RTX 2080ti or faster                | GPU should have at least 11GB VRAM               |
+
+# Package versions used
+
+| Package        | Version |
+|----------------|:-------:|
+| `torch`        | 1.9.0   |
+| `numpy`        | 1.20.1  |
+| `pandas`       | 1.1.1   |
+| `tqdm`         | 4.61.2  |
+| `matplotlib`   | 3.3.1   |
+| `pyyaml`       | 5.3.1   |
+| `scikit-learn` | 0.24.2  |
